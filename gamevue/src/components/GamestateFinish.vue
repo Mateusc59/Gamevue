@@ -1,7 +1,11 @@
 <template>
   <div class="modal">
-    <h2>You Won !</h2>
-
+    <div v-if="uiState === 'won'">
+      <h2>You Won !</h2>
+    </div>
+    <div v-else>
+      <h2>You Lost</h2>
+    </div>
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 131 131"
@@ -16,7 +20,7 @@
       <circle class="cls-2" cx="95" cy="65.8" r="7.5" />
       <circle class="cls-2" cx="36" cy="65.8" r="7.5" />
       <path
-        class="cls3"
+        class="[uiState === 'lost'? 'frown':'','cls3']"
         d="M51,97s6,10,23,10S95,97,95,97"
         transform="translate(-8.5 -5.5)"
       />

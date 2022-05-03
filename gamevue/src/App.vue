@@ -1,8 +1,7 @@
 <template>
   <div id="app" class="contain">
     <GamestateStart v-if="uiState === 'start'">
-      <h2>Wich hooman do you want to be ?</h2>
-
+      <h2>Which hooman do you want to be?</h2>
       <p
         v-for="option in characterChoices"
         :key="option"
@@ -15,11 +14,12 @@
           type="radio"
         />
         <label :for="option">{{ option }}</label>
+        <br />
       </p>
-
-      <button @click="pickCharacter">Pick Your Character</button>
+      <button @click="pickCharacter">Pick your character</button>
     </GamestateStart>
-    <section v-else>
+
+    <section v-else-if="uiState === 'characterChosen'">
       <svg viewBox="0 -180 1628 1180" class="main">
         <defs>
           <clipPath id="bottom-clip">
@@ -45,7 +45,8 @@
         <Friend />
         <Score />
 
-        <component :is="character"></component>
+        <component :is="character" class="character-clip"></component>
+        <Zombie class="zombie-clip" />
 
         <text
           x="1000"
@@ -84,9 +85,11 @@
           />
         </g>
       </svg>
+
       <div class="friendtalk">
         <h3>{{ questions[questionIndex].question }}</h3>
       </div>
+
       <div class="zombietalk">
         <p v-for="character in shuffle(characterChoices)" :key="character">
           <button @click="pickQuestion(character)">
@@ -95,31 +98,8 @@
         </p>
       </div>
     </section>
-    <main>
-      <GamestateFinish v-if="uiState === 'won' && 'lost'">
-        <h2>You Won !</h2>
 
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 131 131"
-          aria-labelledby="face"
-          role="presentation"
-          width="70"
-          height="70"
-        >
-          <title id="face">Face Icon</title>
-
-          <circle class="cls-1" cx="65.5" cy="65.5" r="64" />
-          <circle class="cls-2" cx="95" cy="65.8" r="7.5" />
-          <circle class="cls-2" cx="36" cy="65.8" r="7.5" />
-          <path
-            class="cls3"
-            d="M51,97s6,10,23,10S95,97,95,97"
-            transform="translate(-8.5 -5.5)"
-          />
-        </svg>
-      </GamestateFinish>
-    </main>
+    <GamestateFinish v-else />
   </div>
 </template>
 
